@@ -1,5 +1,5 @@
 # Enter the hostnames/IP addresses of your print servers here. 
-$Servers = @("anpsw22", "192.168.189.39", "192.168.189.19")
+$Servers = @("server1", "server2",
 
 Write-Host "Welcome! This tool can add printers to your PC for you. "
 
@@ -20,7 +20,6 @@ Write-Host "Detected subnet: $subnet.x"
 Write-Host "Pulling printers from your site..."
 
 # Get printer info from each of the print servers in $Servers, then assign it to $Report.
-# I should get better documentation for this section.
 $Report = foreach ($Server in $Servers) {
     Get-Printer -ComputerName $Server |
         Where-Object { $_.PortName -like "$subnet*" } |
@@ -37,7 +36,6 @@ if (!$Report) {
 }
 
 # Print $Report to the console as a list with a number next to it. 
-# I should get better documentation for this section.
 Write-Host "`nAvailable Printers:"
 $Report | ForEach-Object -Begin {$i=1} -Process {
     Write-Host "$i) $($_.ShareName)  "
